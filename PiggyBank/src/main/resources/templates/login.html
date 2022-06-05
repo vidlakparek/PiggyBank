@@ -7,9 +7,9 @@
     <meta property="og:type" content="website">
     <meta name="description" content="Internet banking mockup">
     <base href="/">
-    <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome-all.min.css} " />
-    <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}"  />
-    <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome-all.min.css} "/>
+    <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 </head>
@@ -27,7 +27,10 @@
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center"><h4 class="text-dark mb-4">Welcome Back!</h4></div>
-                                <form class="form-signin" method="post" action="/login">
+                                <div th:if="${loginError}"class="alert alert-danger alert-dismissible fade show">
+                                    <strong class="mx-2">Error!</strong> Wrong ID or password!
+                                </div>
+                                <form class="form-signin" method="post" th:action="@{/login}">
                                     <div class="mb-3"><input class="form-control form-control-user" type="id"
                                                              id="pbID" aria-describedby="ID"
                                                              placeholder="Enter bank ID" name="pbID"
@@ -43,13 +46,12 @@
                                                                            type="checkbox" id="remember-me"><label
                                                     class="form-check-label custom-control-label" for="remember-me">Remember
                                                 Me</label></div>
-                                            <button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
+                                            <button class="btn btn-primary d-block btn-user w-100" type="submit">Login
+                                            </button>
                                         </div>
                                     </div>
                                     <hr>
                                 </form>
-                                <div class="text-center"><a class="small" href="/forgot-password.html">Forgot
-                                    Password?</a></div>
                             </div>
                         </div>
                     </div>
@@ -59,6 +61,6 @@
     </div>
 </div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/assets/js/script.min.js}" ></script>
+<script th:src="@{/assets/js/script.min.js}"></script>
 </body>
 </html>

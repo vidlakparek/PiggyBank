@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - PiggyBank</title>
     <meta property="og:type" content="website">
     <meta name="description" content="Internet banking mockup">
-    <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />    <link rel="stylesheet"
+    <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome-all.min.css} " />
-    <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}"  />
+    <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome-all.min.css} "/>
+    <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}"/>
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -21,11 +22,11 @@
         </a>
             <hr class="sidebar-divider my-0">
             <ul class="navbar-nav text-light" id="accordionSidebar">
-                <li class="nav-item"><a class="nav-link active" href="index.html"><i
+                <li class="nav-item"><a class="nav-link active" href="/"><i
                         class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="../static/newTransfer.html"><i class="fas fa-plus"></i><span>New Transfer</span></a>
+                <li class="nav-item"><a class="nav-link" href="newTransfer.html"><i class="fas fa-plus"></i><span>New Transfer</span></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="../static/account.html"><i class="far fa-user-circle"></i><span>Account</span></a>
+                <li class="nav-item"><a class="nav-link" href="account/1"><i class="far fa-user-circle"></i><span>Account</span></a>
                 </li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
@@ -80,8 +81,10 @@
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><span
-                                    class="d-none d-lg-inline me-2 text-gray-600 small">Jana Nováková</span><img
-                                    class="border rounded-circle img-profile" th:src="@{/assets/img/avatars/avatar1.jpeg}"></a>
+                                    class="d-none d-lg-inline me-2 text-gray-600 small"
+                                    th:text="${user.getName}">Jana Nováková</span><img
+                                    class="border rounded-circle img-profile"
+                                    th:src="@{/assets/img/avatars/avatar1.jpeg}"></a>
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
                                         class="dropdown-item" href="#"><i
                                         class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a
@@ -90,7 +93,7 @@
                                         class="dropdown-item" href="#"><i
                                         class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/logout.html"><i
+                                    <a class="dropdown-item" href="/logout"><i
                                             class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
                                 </div>
                             </div>
@@ -102,118 +105,89 @@
                 <div class="d-sm-flex justify-content-between align-items-center mb-4"><h3 class="text-dark mb-0">
                     Dashboard</h3></div>
                 <div class="row">
-                    <div class="col-md-6 col-xl-3 mb-4"><a class="custom-card" href="/account.html">
-                        <div class="card shadow border-start-primary py-2" href="account.html">
-                            <div class="card-body">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col me-2">
-                                        <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Standard account</span>
-                                        </div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>12 584 CZK</span></div>
-                                    </div>
-                                    <div class="col-auto"><i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a></div>
-                    <div class="col-md-6 col-xl-3 mb-4">
-                        <div class="card shadow border-start-info py-2">
-                            <div class="card-body">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col me-2">
-                                        <div class="text-uppercase text-info fw-bold text-xs mb-1">
-                                            <span>savings account</span></div>
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-auto">
-                                                <div class="text-dark fw-bold h5 mb-0 me-3"><span>41 528 CZK</span>
-                                                </div>
+                    <div class="col-md-6 col-xl-3 mb-4" th:each="account : ${accounts}">
+                        <a class="custom-card" th:href="|/account/${account.number}|">
+                            <div class="card shadow border-start-primary py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span
+                                                    th:text="${account}">Standard Account</span>
+                                            </div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span
+                                                    th:text="${account.balance}">12 584 CZK</span><span> CZK</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-auto"><i class="fas fa-chart-line fa-2x text-gray-300"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col" style="margin: 0px 0px 24px;">
-                        <div class="card shadow border-start-info py-2">
-                            <div class="card-body">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col me-2">
-                                        <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Stocks</span>
-                                        </div>
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-auto">
-                                                <div class="text-dark fw-bold h5 mb-0 me-3">
-                                                    <span>28 357,8 CZK<br></span></div>
-                                            </div>
+                                        <div class="col-auto"><i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
-                                    <div class="col-auto"><i class="fas fa-chart-line fa-2x text-gray-300"></i></div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                    <div class="col"></div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 col-xl-3 mb-4">
-                        <div class="card shadow border-start-success py-2">
-                            <div class="card-body">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col me-2">
-                                        <div class="text-uppercase text-success fw-bold text-xs mb-1">
-                                            <span>visa classic</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>Debit card<br></span></div>
-                                    </div>
-                                    <div class="col-auto"><i class="far fa-credit-card fa-2x text-gray-300"></i></div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-3 mb-4" th:each="card : ${cards}">
+                    <div class="card shadow border-start-success py-2">
+                        <div class="card-body">
+                            <div class="row align-items-center no-gutters">
+                                <div class="col me-2">
+                                    <div class="text-uppercase text-success fw-bold text-xs mb-1">
+                                        <span th:text="${card.owner}">visa classic</span></div>
+                                    <div class="text-dark fw-bold h5 mb-0"><span
+                                            th:text="${card.num}">Debit card<br></span></div>
+                                </div>
+                                <div class="col-auto"><i class="far fa-credit-card fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-7 col-xl-8">
-                        <div class="card shadow mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center"><h6
-                                    class="text-primary fw-bold m-0">Net worth over time</h6><i
-                                    class="fas fa-ellipsis-v"></i></div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Net worth&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;49218&quot;,&quot;54725&quot;,&quot;48527&quot;,&quot;55284&quot;,&quot;72951 &quot;,&quot;74258&quot;,&quot;82469&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:true,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:true},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;beginAtZero&quot;:true,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:true,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;beginAtZero&quot;:true,&quot;padding&quot;:20}}]}}}"></canvas>
-                                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7 col-xl-8">
+                    <div class="card shadow mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center"><h6
+                                class="text-primary fw-bold m-0">Net worth over time</h6></div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Net worth&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;49218&quot;,&quot;54725&quot;,&quot;48527&quot;,&quot;55284&quot;,&quot;72951 &quot;,&quot;74258&quot;,&quot;82469&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:true,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:true},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;beginAtZero&quot;:true,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:true,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;beginAtZero&quot;:true,&quot;padding&quot;:20}}]}}}"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-5 col-xl-4">
-                        <div class="card shadow mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center"><h6
-                                    class="text-primary fw-bold m-0">Net worth %</h6></div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas data-bss-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Standard account&quot;,&quot;Savings Account&quot;,&quot;Stocks&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;15&quot;,&quot;50&quot;,&quot;35&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}"></canvas>
-                                </div>
-                                <div class="text-center small mt-4"><span class="me-2"><i
-                                        class="fas fa-circle text-primary"></i>&nbsp;Standard account</span><span
-                                        class="me-2"><i
-                                        class="fas fa-circle text-success"></i>Savings Account</span><span class="me-2"><i
-                                        class="fas fa-circle text-info"></i>&nbsp;Stocks</span></div>
+                </div>
+                <div class="col-lg-5 col-xl-4">
+                    <div class="card shadow mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center"><h6
+                                class="text-primary fw-bold m-0">Net worth %</h6></div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas data-bss-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Standard account&quot;,&quot;Savings Account&quot;,&quot;Stocks&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;15&quot;,&quot;50&quot;,&quot;35&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}"></canvas>
                             </div>
+                            <div class="text-center small mt-4"><span class="me-2"><i
+                                    class="fas fa-circle text-primary"></i>&nbsp;Standard account</span><span
+                                    class="me-2"><i
+                                    class="fas fa-circle text-success"></i>Savings Account</span><span
+                                    class="me-2"><i
+                                    class="fas fa-circle text-info"></i>&nbsp;Stocks</span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="bg-white sticky-footer">
-            <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © PiggyBank 2022</span></div>
-            </div>
-        </footer>
     </div>
-    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+</div>
+<footer class="bg-white sticky-footer">
+    <div class="container my-auto">
+        <div class="text-center my-auto copyright"><span>Copyright © PiggyBank 2022</span></div>
+    </div>
+</footer>
+</div>
+<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/assets/js/chart.min.js}"></script>
-<script th:src="@{/assets/js/script.min.js}" ></script>
+<script th:src="@{/assets/js/script.min.js}"></script>
 </body>
 </html>
